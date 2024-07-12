@@ -1,0 +1,11 @@
+.nav-tabs {
+  padding-left: 1rem;
+}
+
+.nav-item {
+  background-color: var(--bg-tab-color);
+  margin-left: 0.375rem;
+  margin-top: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  border-top-left-radius: 0.375rem;
+}

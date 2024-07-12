@@ -1,0 +1,21 @@
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--main-text-color);
+  margin-left: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 2rem;
+}
+
+.nav-link {
+  color: var(--main-text-color);
+}
+
+.nav-link.active {
+  color: var(--secondary-text-color) !important;
+}

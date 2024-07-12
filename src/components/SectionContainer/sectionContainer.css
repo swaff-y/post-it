@@ -1,0 +1,11 @@
+.section-container {
+  color: var(--main-text-color);
+  background-color: var(--back-color);
+  margin: 3rem; 
+  border: 1px solid var(--bg-border-color);
+  border-radius: var(--tab-border-radius);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 2rem 2rem 1rem 2rem;
+}

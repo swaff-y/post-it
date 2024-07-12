@@ -1,0 +1,4 @@
+.home-container {
+  background-color: var(--bg-tab-color) !important;
+  min-height: 100vh;
+}
