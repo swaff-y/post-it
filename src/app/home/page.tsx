@@ -1,6 +1,14 @@
 import HomeContainer from "@/components/HomeContainer/HomeContainer";
+import { FC } from "react";
 
-const Home = () => {
+type HomeProps = {
+  params: {
+    [key: string]: string;
+  };
+};
+
+const Home: FC<HomeProps> = ({ params }) => {
+  console.log(params.location);
   return (
     <HomeContainer />
   );

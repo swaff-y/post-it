@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import "./home-container.css";
 import { SectionContainer } from "../SectionContainer/SectionContainer";
 import { FilterForm } from "../FilterForm/FilterForm";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Utils } from "@/utils/Utils";
 import { useLocationParams } from "@/hooks/useLocationParams";
 
@@ -19,18 +19,19 @@ export const FILTER_OPTIONS = [
   }
 ];
 
-const Home = () => {
-  // const navigate = useNavigate();
+
+const Home: FC = () => {
   const {
     filter,
     value
-  } = { filter: 'title', value: 'test' };
+  } = useLocationParams();
   const [valueState, setValueState] = useState(value || '');
   const [selection, setSelection] = useState(
     Utils.getSelectionFromFilterOptions(filter, FILTER_OPTIONS)
   );
 
   const onSubmit = () => {
+    window.location.search = `?filter=${selection.id}&value=${valueState}`;
     // navigate(`/home/?filter=${selection.id}&value=${valueState}`);
   };
   return (
