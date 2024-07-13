@@ -10,7 +10,7 @@ export const NavBar: FC<NavBarProps> = ({ selected = 'home' }) => {
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Navbar.Brand href="/" className="nav-brand">
-        Links
+        Resource Library
       </Navbar.Brand>
       <div className='nav-links'>
         <Nav className="me-auto">

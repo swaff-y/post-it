@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@microlink/react": "^5.5.18",
     "@tanstack/react-query": "^5.51.1",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
@@ -16,7 +17,8 @@
     "react": "^18",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18",
-    "react-router-dom": "^6.24.1"
+    "react-router-dom": "^6.24.1",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@types/node": "^20",
