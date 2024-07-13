@@ -12,7 +12,6 @@ type LinkAttrs = {
 };
 
 export const NavTabs: FC<NavTabsProps> = ({ links }) => {
-  console.log(window.location.pathname, )
   return (
     <Nav 
       data-bs-theme="dark" 

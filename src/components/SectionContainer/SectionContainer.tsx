@@ -7,7 +7,9 @@ interface SectionContainerProps {
 
 export const SectionContainer: FC<SectionContainerProps> = ({ children }) => {
   return (
-    <div className="section-container">
+    <div 
+      className="section-container"
+    >
       {children}
     </div>
   );

@@ -3,3 +3,16 @@
   min-height: 100vh;
   border: 0.01rem solid;
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1rem;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.link-card {
+  width: 20rem;
+}

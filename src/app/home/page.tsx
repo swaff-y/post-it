@@ -8,7 +8,6 @@ type HomeProps = {
 };
 
 const Home: FC<HomeProps> = ({ params }) => {
-  console.log(params.location);
   return (
     <HomeContainer />
   );

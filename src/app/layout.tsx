@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
 import { NavBar } from "@/components/NavBar/NavBar";
 import { NavTabs } from "@/components/NavTabs/NavTabs";
+import { Providers } from "@/providers/Providers";
 
 // export const metadata: Metadata = {
 //   title: "Post-it",
@@ -13,16 +14,16 @@ import { NavTabs } from "@/components/NavTabs/NavTabs";
 
 const NAV_LINKS = [
   { 
-    label: 'Notes',
+    label: 'Links',
     href: '/home'
   },
   { 
-    label: 'Create Note',
-    href: '/home/create-note'
+    label: 'Create Link',
+    href: '/home/create-link'
   },
   { 
-    label: 'Delete Note',
-    href: '/home/delete-note'
+    label: 'Delete Link',
+    href: '/home/delete-link'
   }
 ];
 
@@ -34,9 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NavBar selected="home" />
-        <NavTabs links={NAV_LINKS}/>
-        {children}
+        <Providers>
+          <NavBar selected="home" />
+          <NavTabs links={NAV_LINKS}/>
+          {children}
+        </Providers>
       </body>
     </html>
   );

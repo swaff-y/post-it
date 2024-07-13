@@ -9,7 +9,9 @@ type NavBarProps = {
 export const NavBar: FC<NavBarProps> = ({ selected = 'home' }) => {
   return (
     <Navbar bg="dark" data-bs-theme="dark">
-      <Navbar.Brand href="/" className="nav-brand">Post Its</Navbar.Brand>
+      <Navbar.Brand href="/" className="nav-brand">
+        Links
+      </Navbar.Brand>
       <div className='nav-links'>
         <Nav className="me-auto">
           <Nav.Link 
