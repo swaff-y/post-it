@@ -3,6 +3,7 @@ import { SectionContainer } from "@/components/SectionContainer/SectionContainer
 import { useLinks } from "@/hooks/useLinks";
 import { useLocationParams } from "@/hooks/useLocationParams";
 import { Utils } from "@/utils/Utils";
+import { usePathname, useRouter } from "next/navigation";
 import { FC, useState } from "react";
 
 export const FILTER_OPTIONS = [
@@ -21,6 +22,7 @@ export const FILTER_OPTIONS = [
 ];
 
 export const HomeFilter: FC = () => {
+  const router = useRouter();
   const {
     filter,
     value
@@ -31,7 +33,7 @@ export const HomeFilter: FC = () => {
   );
 
   const onSubmit = () => {
-    window.location.search = `?filter=${selection.id}&value=${valueState}`;
+    router.push(`/home?filter=${selection.id}&value=${valueState}`);
   };
   
   return (

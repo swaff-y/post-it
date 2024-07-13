@@ -1,17 +1,19 @@
 'use client'
 
 import HomeContainer from "@/components/HomeContainer/HomeContainer";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 
-type HomeProps = {
-  params: {
-    [key: string]: string;
-  };
-};
+type HomeProps = {};
 
-const Home: FC<HomeProps> = ({ params }) => {
+function SearchBarFallback() {
+  return <>placeholder</>
+}
+
+const Home: FC<HomeProps> = () => {
   return (
-    <HomeContainer />
+    <Suspense fallback={<SearchBarFallback />}>
+      <HomeContainer />
+    </Suspense>
   );
 };
 

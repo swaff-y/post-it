@@ -4,7 +4,7 @@ import "./page.css";
 import { SectionContainer } from "@/components/SectionContainer/SectionContainer";
 import { NavTabs } from "@/components/NavTabs/NavTabs";
 import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLexicon } from "@/context/lexicon";
 import { useRouter } from "next/navigation";

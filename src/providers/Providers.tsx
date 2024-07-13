@@ -1,3 +1,4 @@
+'use client'
 
 import { LexiconAPI } from "@/api/LexiconAPI";
 import { LexiconProvider } from "@/context/lexicon";

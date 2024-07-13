@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import './navTabs.css'
 import { Nav } from "react-bootstrap";
+import { usePathname } from 'next/navigation';
 
 interface NavTabsProps {
   links: LinkAttrs[];
@@ -12,6 +13,8 @@ type LinkAttrs = {
 };
 
 export const NavTabs: FC<NavTabsProps> = ({ links }) => {
+  const location = usePathname();
+  
   return (
     <Nav 
       data-bs-theme="dark" 
@@ -28,8 +31,8 @@ export const NavTabs: FC<NavTabsProps> = ({ links }) => {
             href={link.href}
             active={
               index === 0 &&
-              (window.location.pathname === '/home/notes' || window.location.pathname === '/') ?
-              true : window.location.pathname === link.href
+              (location === '/home/notes' || location === '/') ?
+              true : location === link.href
             }
           >
             {link.label}

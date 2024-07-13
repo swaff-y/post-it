@@ -1,12 +1,17 @@
-import { Nav, Navbar, NavbarProps } from 'react-bootstrap'
+'use client'
+
+import { Nav, Navbar } from 'react-bootstrap'
 import './navBar.css'
-import { FC } from 'react'
+import { FC, use, useEffect } from 'react'
+import { usePathname } from 'next/navigation';
 
 type NavBarProps = {
   selected?: string
 };
 
 export const NavBar: FC<NavBarProps> = ({ selected = 'home' }) => {
+  const location = usePathname();
+
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Navbar.Brand href="/" className="nav-brand">
@@ -17,8 +22,10 @@ export const NavBar: FC<NavBarProps> = ({ selected = 'home' }) => {
           <Nav.Link 
             href="/" 
             active={
-              !!window.location.pathname.match(/\/home/) ||
-              window.location.pathname === '/'
+              !!location && (
+                !!location.match(/\/home/) ||
+                location === '/'
+              )
             }>
               Home
             </Nav.Link>
@@ -27,7 +34,7 @@ export const NavBar: FC<NavBarProps> = ({ selected = 'home' }) => {
           <Nav.Link 
             href="/account" 
             active={
-              window.location.pathname === '/account'
+              location === '/account'
             }>
               Account
             </Nav.Link>
