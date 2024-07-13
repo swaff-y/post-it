@@ -51,6 +51,7 @@ const CreateNote = () => {
     if (urlIsValid && descriptionIsValid && keywordsIsValid) {
       mutation.mutate(params);
       setUrlValue("");
+      setShowUrlTooltip(false);
       setDescriptionValue("");
       setKeywordsValue("");
     }
