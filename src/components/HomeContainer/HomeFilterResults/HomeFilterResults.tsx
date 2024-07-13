@@ -4,12 +4,28 @@ import { Utils } from "@/utils/Utils";
 import { Card } from "react-bootstrap";
 import MicroLink from "@microlink/react";
 import { useLinks } from "@/hooks/useLinks";
+import { useLocationParams } from "@/hooks/useLocationParams";
 
 export const HomeFilterResults = () => {
+  const { filter, value } = useLocationParams();
   const { data, isSuccess } = useLinks();
-  const links = data.getAll();
+  let links = data.getAll();
 
-  
+  if(filter && value) {
+    links = links.filter((link: Link) => {
+      if(filter === 'id') {
+        return link.id === value;
+      } else if(filter === 'description') {
+        return link.description.toLowerCase().includes(value.toLowerCase());
+      } else if(filter === 'keyword') {
+        return link.description.toLowerCase().includes(value.toLowerCase());
+      }
+    });
+  };
+
+  if(filter === 'id' && value !== '' && links.length > 1) {
+    links = [];
+  }
   
   return (
     <>

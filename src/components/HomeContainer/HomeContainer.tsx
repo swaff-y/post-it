@@ -7,6 +7,7 @@ import { NavTabs } from "../NavTabs/NavTabs";
 import { HomeFilter } from "./HomeFilter/HomeFilter";
 import { HomeFilterResults } from "./HomeFilterResults/HomeFilterResults";
 import { HomeFilterResultsLoader } from "./HomeFilterResultsLoader/HomeFilterResultsLoader";
+import { HomeFilterError } from "./HomeFilterError/HomeFilterError";
 
 export const NAV_LINKS = [
   { 
@@ -32,6 +33,7 @@ const Home: FC = () => {
       <NavTabs links={NAV_LINKS}/>
       <div className="home-container">
         <HomeFilter/>
+        <HomeFilterError/>
         <HomeFilterResultsLoader/>
         <HomeFilterResults/>
       </div>
