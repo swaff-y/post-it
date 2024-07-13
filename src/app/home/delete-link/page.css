@@ -3,3 +3,29 @@
   min-height: 100vh;
   border: 1px solid;
 }
+
+.list-group {
+  border: 1px solid var(--bg-border-color);
+  width: 80%;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  background-color: var(--bg-tab-color);
+  border: 1px solid var(--bg-border-color);
+  color: var(--main-text-color);
+  overflow: scroll;
+}
+
+.trash-icon {
+  color: var(--secondary-text-color);
+  margin-top: 1rem;
+}
+
+@media (max-width: 699px) {
+  .list-item {
+    flex-direction: column;
+  }
+}
