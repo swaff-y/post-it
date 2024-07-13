@@ -25,3 +25,9 @@
 .pending-message {
   color: var(--main-text-color);
 }
+
+@media (max-width: 699px) {
+  .create-form {
+    width: 95%;
+  }
+}

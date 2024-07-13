@@ -11,8 +11,16 @@
   padding: 1rem;
   flex-direction: row;
   gap: 1rem;
+  overflow: scroll;
 }
 
 .link-card {
   width: 20rem;
+}
+
+@media (max-width: 699px) {
+  .link-card {
+    max-width: 20rem;
+    overflow: scroll;
+  }
 }
