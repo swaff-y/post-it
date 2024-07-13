@@ -7,13 +7,23 @@ import { NAV_LINKS } from "@/components/HomeContainer/HomeContainer";
 import { ListGroup, Spinner } from "react-bootstrap";
 import { useLinks } from "@/hooks/useLinks";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { useState } from "react";
+import { DeleteConfirmation } from "./DeleteConfirmation";
 
 const DeleteNote = () => {
   const { data, isSuccess, isError, isLoading } = useLinks();
+  const [show, setShow] = useState(false);
+  const [link, setLink] = useState({} as any);
   const links = data.getAll();
 
   const handleDelete = (id: string) => {
+    setShow(true);
+    setLink(links.find((link: any) => link.id === id));
     console.log('delete', id);
+  };
+
+  const unSetLink = () => {
+    setLink({});
   };
 
   return (
@@ -59,6 +69,7 @@ const DeleteNote = () => {
             </ListGroup>
           )}
         </SectionContainer>
+        <DeleteConfirmation show={show} setShow={setShow} link={link} unSetLink={unSetLink}/>
       </div>
     </>
   );

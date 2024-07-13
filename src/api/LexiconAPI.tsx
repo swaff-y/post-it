@@ -35,4 +35,11 @@ export class LexiconAPI {
 
     return response.data;
   };
+
+  deleteLink = async (id: string) => {
+    const response = await this.client.delete(`/api/links/${id}`);
+    if (!response.data) throw new Error('Failed to delete link');
+
+    return response.data;
+  };
 }

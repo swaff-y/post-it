@@ -1,0 +1,7 @@
+.delete-confirmation {
+  color: var(--main-text-color);
+}
+
+.error-message {
+  color: var(--secondary-text-color);
+}
