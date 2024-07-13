@@ -3,3 +3,17 @@
   min-height: 100vh;
   border: 1px solid;
 }
+
+.create-form {
+  width: 60%;
+}
+
+.form-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-button-container button {
+  margin-right: 1rem;
+  width: 200px;
+}
