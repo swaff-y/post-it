@@ -1,4 +1,4 @@
-import HomeContainer from "@/components/HomeContainer/HomeContainer";
+'use client';
 
 const Account = () => {
   return (

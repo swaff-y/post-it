@@ -1,3 +1,5 @@
+'use client'
+
 import HomeContainer from "@/components/HomeContainer/HomeContainer";
 import { FC } from "react";
 
