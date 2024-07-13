@@ -7,7 +7,9 @@ const CLIENT = axios.create({
 });
 
 export type LinkParams = {
-
+  url: string;
+  description: string;
+  keywords: string;
 };
 
 export class LexiconAPI {
@@ -21,12 +23,15 @@ export class LexiconAPI {
   };
 
   fetchLink = async (id: string) => {
-    const response = await this.client.get(`meetings`, {
-      params: {
-        id,
-      },
-    });
+    const response = await this.client.get(`/api/links/${id}`);
     if (!response.data) throw new Error('No link with that id found');
+
+    return response.data;
+  };
+
+  createLink = async (link: LinkParams) => {
+    const response = await this.client.post('/api/links', link);
+    if (!response.data) throw new Error('Failed to create link');
 
     return response.data;
   };

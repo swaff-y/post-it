@@ -17,3 +17,11 @@
   margin-right: 1rem;
   width: 200px;
 }
+
+.error-message {
+  color: var(--secondary-text-color);
+}
+
+.pending-message {
+  color: var(--main-text-color);
+}
