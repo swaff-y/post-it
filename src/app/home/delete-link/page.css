@@ -17,6 +17,12 @@
   border: 1px solid var(--bg-border-color);
   color: var(--main-text-color);
   overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.list-item::-webkit-scrollbar {
+  display: none;
 }
 
 .trash-icon {
