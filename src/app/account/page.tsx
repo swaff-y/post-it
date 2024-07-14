@@ -14,10 +14,9 @@ const Account = () => {
         <Card.Header>
           <Card.Img 
             as={Image as any}
-            width="100px"
-            height="100px"
             src='avatar.png'
             roundedCircle
+            className='account-avatar'
           />
         </Card.Header>
         <Card.Body>
