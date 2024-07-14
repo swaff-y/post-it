@@ -9,3 +9,10 @@
   justify-content: space-around;
   padding: 2rem 2rem 1rem 2rem;
 }
+
+@media (max-width: 699px) {
+  .section-container {
+    margin: 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+}

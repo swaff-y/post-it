@@ -28,4 +28,8 @@
   .list-item {
     flex-direction: column;
   }
+
+  .list-group {
+    width: 100%;
+  }
 }
