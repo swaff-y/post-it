@@ -1,6 +1,5 @@
 'use client';
 
-import { Utils } from '@/utils/Utils';
 import './account.css';
 import { Card, Image, ListGroup } from "react-bootstrap";
 
