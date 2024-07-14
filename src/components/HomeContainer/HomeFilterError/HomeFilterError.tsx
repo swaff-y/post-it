@@ -4,8 +4,7 @@ import { useLinks } from "@/hooks/useLinks";
 
 export const HomeFilterError = () => {
   const { data, isError } = useLinks();
-  let links = data.getAll();
-  const imageUrl = './Error.png'
+  const imageUrl = 'Error.png'
   
   return (
     <>

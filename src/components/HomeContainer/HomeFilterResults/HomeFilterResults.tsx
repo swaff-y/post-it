@@ -34,10 +34,10 @@ export const HomeFilterResults = () => {
         <div className='card-container'>
           {links.map((link: Link, index: number) => (
             <Card
-            bg="dark"
-            text="light"
-            key={index}
-            className='link-card'
+              bg="dark"
+              text="light"
+              key={index}
+              className='link-card'
             >
               <Card.Header>
                 <Card.Title>

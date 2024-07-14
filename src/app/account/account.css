@@ -1,9 +1,17 @@
-.account-body {
-  background-color: var(--back-color);
+.account-card {
+  width: 60%;
+  margin-top: 4rem;
+  margin-left: 20%;
+  display: flex;
+  flex-direction: row;
+}
+
+.ac-list-group {
+  width: 80%;
+}
+
+.ac-list-item {
   color: var(--main-text-color);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-tab-color);
+  border: none
 }
