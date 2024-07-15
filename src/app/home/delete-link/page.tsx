@@ -4,17 +4,20 @@ import { SectionContainer } from "@/components/SectionContainer/SectionContainer
 import "./page.css";
 import { NavTabs } from "@/components/NavTabs/NavTabs";
 import { NAV_LINKS } from "@/components/HomeContainer/HomeContainer";
-import { ListGroup, Spinner } from "react-bootstrap";
+import { ListGroup, Spinner, Toast, ToastContainer } from "react-bootstrap";
 import { useLinks } from "@/hooks/useLinks";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DeleteConfirmation } from "./DeleteConfirmation";
+import { useInfoToasts } from "@/context/infoToasts";
 
 const DeleteNote = () => {
   const { data, isSuccess, isError, isLoading } = useLinks();
   const [show, setShow] = useState(false);
   const [link, setLink] = useState({} as any);
   const links = data.getAll();
+  const toastInfo = useInfoToasts() as any;
+  const [infoToast, setInfoToast] = toastInfo
 
   const handleDelete = (id: string) => {
     setShow(true);
@@ -25,6 +28,16 @@ const DeleteNote = () => {
   const unSetLink = () => {
     setLink({});
   };
+
+  useEffect(() => {
+    if (infoToast.message) {
+      const timer = setTimeout(() => {
+        setInfoToast({ message: '', type: '' })
+      }, 5000)
+
+      return () => clearTimeout(timer);
+    }
+  }, [infoToast])
 
   return (
     <>
@@ -70,6 +83,22 @@ const DeleteNote = () => {
           )}
         </SectionContainer>
         <DeleteConfirmation show={show} setShow={setShow} link={link} unSetLink={unSetLink}/>
+        <ToastContainer
+          className="toast-container"
+        >
+            <Toast 
+              bg={infoToast.type}
+              show={!!infoToast.message}
+            >
+              <Toast.Header 
+                closeVariant='white'
+                closeButton={false}
+              >
+                <strong className="me-auto">{infoToast.type}</strong>
+              </Toast.Header>
+              <Toast.Body>{infoToast.message}</Toast.Body>
+            </Toast>
+        </ToastContainer>
       </div>
     </>
   );
