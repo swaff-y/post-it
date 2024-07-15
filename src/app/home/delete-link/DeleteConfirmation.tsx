@@ -2,6 +2,7 @@ import './deleteConfirmation.css';
 import { FC, useState } from "react"
 import { Button, Modal, Spinner } from "react-bootstrap"
 import { Link } from '@/models/Link';
+import { useInfoToasts } from '@/context/infoToasts';
 
 type DeleteConfirmationProps = {
   show: boolean;
@@ -18,6 +19,7 @@ export const DeleteConfirmation: FC<DeleteConfirmationProps> = ({
 }) => {
   const [isPending, setIsPending] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [_toast, setToast] = useInfoToasts() as any;
   
   const handleDelete = () => {
     setIsPending(true)
@@ -26,9 +28,11 @@ export const DeleteConfirmation: FC<DeleteConfirmationProps> = ({
         setIsPending(false);
         setShow(false);
         unSetLink();
+        setToast({ message: 'Link deleted successfully', type: 'success' })
       },
       onError: (_error) => {
         setIsError(true);
+        setToast({ message: 'An error occurred. Please try again.', type: 'danger' });
       },
       onSettled: () => {
         setIsPending(false);

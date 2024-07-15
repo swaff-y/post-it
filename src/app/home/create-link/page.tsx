@@ -7,10 +7,12 @@ import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useNewLink } from "@/hooks/useNewLink";
+import { useInfoToasts } from "@/context/infoToasts";
 
 const CreateNote = () => {
   let router = useRouter();
   const newLink = useNewLink();
+  const [_toast, setToast] = useInfoToasts() as any;
 
   const [urlValue, setUrlValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
@@ -40,9 +42,11 @@ const CreateNote = () => {
         onSuccess: () => {
           setIsPending(false)
           router.push('/home')
+          setToast({ message: 'Link created successfully', type: 'success' });
         },
         onError: (_error) => {
           setIsError(true);
+          setToast({ message: 'An error occurred. Please try again.', type: 'danger' });
         },
         onSettled: () => {
           setIsPending(false);
