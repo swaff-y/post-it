@@ -1,3 +1,4 @@
+import { UseMutationResult } from '@tanstack/react-query';
 import { Callback } from './Eventing';
 
 export interface ModelAttributes<T> {
@@ -20,7 +21,11 @@ export interface HasLinkKey {
 }
 
 export class Model<T extends HasLinkKey> {
-  constructor(private attributes: ModelAttributes<T>, private events: Events) {}
+  constructor(
+    private deleteMutation: UseMutationResult<any, Error, string, unknown>,
+    private attributes: ModelAttributes<T>,
+    private events: Events
+  ) {}
 
   on = this.events.on;
   trigger = this.events.trigger;
@@ -31,11 +36,30 @@ export class Model<T extends HasLinkKey> {
     this.events.trigger('change');
   }
 
-  fetch(): void {
+  delete({
+    onSuccess,
+    onSettled,
+    onError,
+  }: {
+    onSuccess?: () => void;
+    onSettled?: () => void;
+    onError?: (error: Error) => void;
+  }): void {
     const id = this.get('id');
 
-    if (typeof id !== 'string') {
-      throw new Error('Cannot fetch without an id');
+    if (typeof id !== 'string' || !id) {
+      throw new Error('Cannot delete without an id');
     }
+
+    this.trigger('delete');
+    return this.deleteMutation.mutate(id, { onSuccess, onSettled, onError });
   }
+
+  // fetch(): void {
+  //   const id = this.get('id');
+
+  //   if (typeof id !== 'string') {
+  //     throw new Error('Cannot fetch without an id');
+  //   }
+  // }
 }

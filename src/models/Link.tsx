@@ -1,3 +1,4 @@
+import { UseMutationResult } from '@tanstack/react-query';
 import { Attributes } from './baseModels/Attributes';
 import { Collection } from './baseModels/Collection';
 import { Eventing } from './baseModels/Eventing';
@@ -12,6 +13,7 @@ export interface LinkProps {
 
 type LinkBuildProps = {
   data: any;
+  deleteMutation: UseMutationResult<any, Error, string, unknown>;
 };
 
 export class Link extends Model<LinkProps> {
@@ -21,15 +23,16 @@ export class Link extends Model<LinkProps> {
    * - description: string - a description of the link
    * - keywords: string[] - an array of keywords for the link
    */
-  static buildLink(attrs: LinkProps): Link {
-    return new Link(new Attributes<LinkProps>(attrs), new Eventing());
+  static buildLink(attrs: LinkProps, deleteMutation: UseMutationResult<any, Error, string, unknown>): Link {
+    return new Link(deleteMutation, new Attributes<LinkProps>(attrs), new Eventing());
   }
 
   static buildLinkCollection({
     data,
+    deleteMutation,
   }: LinkBuildProps): Collection<Link, LinkProps> {
     return new Collection<Link, LinkProps>(data, (json: LinkProps) =>
-      Link.buildLink(json)
+      Link.buildLink(json, deleteMutation)
     );
   }
 

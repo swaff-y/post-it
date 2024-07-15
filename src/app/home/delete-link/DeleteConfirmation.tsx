@@ -1,8 +1,7 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import './deleteConfirmation.css';
 import { FC, useState } from "react"
 import { Button, Modal, Spinner } from "react-bootstrap"
-import { useLexicon } from '@/context/lexicon';
 import { Link } from '@/models/Link';
 
 type DeleteConfirmationProps = {
@@ -12,31 +11,31 @@ type DeleteConfirmationProps = {
   unSetLink: () => void;
 };
 
-export const DeleteConfirmation: FC<DeleteConfirmationProps> = ({ show, setShow, link, unSetLink}) => {
+export const DeleteConfirmation: FC<DeleteConfirmationProps> = ({ 
+  show,
+  setShow,
+  link,
+  unSetLink
+}) => {
   const queryClient = useQueryClient();
-  const { deleteLink } = useLexicon();
   const [isPending, setIsPending] = useState(false);
   const [isError, setIsError] = useState(false);
-
-  const mutation = useMutation({
-    mutationFn: deleteLink,
-    onMutate: () => {
-      setIsPending(true)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['links'] })
-      setIsPending(false)
-      setShow(false);
-      unSetLink();
-    },
-    onError: (error) => {
-      setIsError(true)
-    }
-  })
-
   
   const handleDelete = () => {
-    mutation.mutate(link.id);
+    setIsPending(true)
+    link.delete({
+      onSuccess: () => {
+        setIsPending(false);
+        setShow(false);
+        unSetLink();
+      },
+      onError: (error) => {
+        setIsError(true);
+      },
+      onSettled: () => {
+        setIsPending(false);
+      }
+    });
   };
 
   const handleClose = () => {
