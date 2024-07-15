@@ -16,12 +16,17 @@ interface Events {
   trigger(eventName: string): void;
 }
 
+type Params = {
+  [key: string]: string;
+};
+
 export interface HasLinkKey {
   id?: string;
 }
 
 export class Model<T extends HasLinkKey> {
   constructor(
+    private saveMutation: UseMutationResult<any, Error, Params, unknown>,
     private deleteMutation: UseMutationResult<any, Error, string, unknown>,
     private attributes: ModelAttributes<T>,
     private events: Events
@@ -55,11 +60,30 @@ export class Model<T extends HasLinkKey> {
     return this.deleteMutation.mutate(id, { onSuccess, onSettled, onError });
   }
 
-  // fetch(): void {
-  //   const id = this.get('id');
+  save({
+    onSuccess,
+    onSettled,
+    onError,
+  }: {
+    onSuccess?: () => void;
+    onSettled?: () => void;
+    onError?: (error: Error) => void;
+  }): void {
+    const params = this.attributes.getAll() as unknown as Params;
 
-  //   if (typeof id !== 'string') {
-  //     throw new Error('Cannot fetch without an id');
-  //   }
-  // }
+    if (!params) {
+      throw new Error('Cannot save without params');
+    }
+
+    this.trigger('save');
+    return this.saveMutation.mutate(params, { onSuccess, onSettled, onError });
+  }
+
+  fetch(): void {
+    const id = this.get('id');
+
+    if (typeof id !== 'string') {
+      throw new Error('Cannot fetch without an id');
+    }
+  }
 }

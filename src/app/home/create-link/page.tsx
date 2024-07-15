@@ -4,15 +4,14 @@ import "./page.css";
 import { SectionContainer } from "@/components/SectionContainer/SectionContainer";
 import { NavTabs } from "@/components/NavTabs/NavTabs";
 import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useLexicon } from "@/context/lexicon";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useNewLink } from "@/hooks/useNewLink";
 
 const CreateNote = () => {
   let router = useRouter();
-  const { createLink } = useLexicon();
-  const queryClient = useQueryClient()
+  const newLink = useNewLink();
+
   const [urlValue, setUrlValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
   const [keywordsValue, setKeywordsValue] = useState("");
@@ -25,23 +24,9 @@ const CreateNote = () => {
   const [isError, setIsError] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
-  const mutation = useMutation({
-    mutationFn: createLink,
-    onMutate: () => {
-      setIsPending(true)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['links'] })
-      setIsPending(false)
-      router.push('/home')
-    },
-    onError: (error) => {
-      setIsError(true)
-    }
-  })
-
   const handleSubmit = (event: any) => {
     event.preventDefault();
+
     const params = {
       url: event.target.ControlInput1.value,
       description: event.target.ControlInput2.value,
@@ -49,15 +34,28 @@ const CreateNote = () => {
     };
 
     if (urlIsValid && descriptionIsValid && keywordsIsValid) {
-      mutation.mutate(params);
-      setUrlValue("");
-      setShowUrlTooltip(false);
-      setDescriptionValue("");
-      setKeywordsValue("");
+      const link = newLink(params);
+      setIsPending(true);
+      link.save({
+        onSuccess: () => {
+          setIsPending(false)
+          router.push('/home')
+        },
+        onError: (_error) => {
+          setIsError(true);
+        },
+        onSettled: () => {
+          setIsPending(false);
+          setUrlValue("");
+          setShowUrlTooltip(false);
+          setDescriptionValue("");
+          setKeywordsValue("");
+        }
+      });
     }
   };
 
-  const handleUrlChange = (event: any) => {
+  const handleUrlChange = (event: ChangeEvent<any>) => {
     setUrlValue(event.target.value);
 
     if (urlIsValid === false && event.target.value.length >= 1) {

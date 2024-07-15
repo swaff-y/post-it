@@ -5,7 +5,7 @@ import { UseQueryResponse } from './types';
 import { useQueryClient } from '@tanstack/react-query';
 
 export const useLinks = (): UseQueryResponse => {
-  const { fetchLinks, deleteLink } = useLexicon();
+  const { fetchLinks, deleteLink, createLink } = useLexicon();
   const queryClient = useQueryClient();
   const result = useQuery({
     queryKey: ['links'],
@@ -19,9 +19,20 @@ export const useLinks = (): UseQueryResponse => {
     },
   });
 
+  const saveMutation = useMutation({
+    mutationFn: createLink,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['links'] })
+    },
+  });
+
   const { data, isError, isLoading, isSuccess } = result;
   const linksArr = data?.links;
-  const links = Link.buildLinkCollection({ data: linksArr, deleteMutation });
+  const links = Link.buildLinkCollection({ 
+    data: linksArr,
+    deleteMutation,
+    saveMutation
+  });
 
   return {
     data: links,

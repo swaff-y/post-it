@@ -10,8 +10,9 @@ type UseLinkProps = {
 export const useLink = ({
   id,
 }: UseLinkProps): UseQueryResponse => {
-  const { fetchLink, deleteLink } = useLexicon();
+  const { fetchLink, deleteLink, createLink } = useLexicon();
   const queryClient = useQueryClient();
+
   const result = useQuery({
     queryKey: ['link', id],
     queryFn: () => fetchLink(id),
@@ -25,8 +26,15 @@ export const useLink = ({
     },
   });
 
+  const saveMutation = useMutation({
+    mutationFn: createLink,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['links'] })
+    },
+  });
+
   return {
-    data: Link.buildLink(data?.[0], deleteMutation),
+    data: Link.buildLink(data?.[0], deleteMutation, saveMutation),
     isError,
     isLoading,
     isSuccess,

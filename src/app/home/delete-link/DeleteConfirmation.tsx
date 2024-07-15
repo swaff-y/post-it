@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import './deleteConfirmation.css';
 import { FC, useState } from "react"
 import { Button, Modal, Spinner } from "react-bootstrap"
@@ -17,7 +16,6 @@ export const DeleteConfirmation: FC<DeleteConfirmationProps> = ({
   link,
   unSetLink
 }) => {
-  const queryClient = useQueryClient();
   const [isPending, setIsPending] = useState(false);
   const [isError, setIsError] = useState(false);
   
@@ -29,7 +27,7 @@ export const DeleteConfirmation: FC<DeleteConfirmationProps> = ({
         setShow(false);
         unSetLink();
       },
-      onError: (error) => {
+      onError: (_error) => {
         setIsError(true);
       },
       onSettled: () => {

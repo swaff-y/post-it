@@ -3,6 +3,7 @@ import { Attributes } from './baseModels/Attributes';
 import { Collection } from './baseModels/Collection';
 import { Eventing } from './baseModels/Eventing';
 import { Model } from './baseModels/Model';
+import { Params } from '@/api/LexiconAPI';
 
 export interface LinkProps {
   id?: string;
@@ -14,6 +15,7 @@ export interface LinkProps {
 type LinkBuildProps = {
   data: any;
   deleteMutation: UseMutationResult<any, Error, string, unknown>;
+  saveMutation: UseMutationResult<any, Error, Params, unknown>;
 };
 
 export class Link extends Model<LinkProps> {
@@ -23,16 +25,21 @@ export class Link extends Model<LinkProps> {
    * - description: string - a description of the link
    * - keywords: string[] - an array of keywords for the link
    */
-  static buildLink(attrs: LinkProps, deleteMutation: UseMutationResult<any, Error, string, unknown>): Link {
-    return new Link(deleteMutation, new Attributes<LinkProps>(attrs), new Eventing());
+  static buildLink(
+    attrs: LinkProps,
+    deleteMutation: UseMutationResult<any, Error, string, unknown>,
+    saveMutation: UseMutationResult<any, Error, Params, unknown>,
+  ): Link {
+    return new Link(saveMutation, deleteMutation, new Attributes<LinkProps>(attrs), new Eventing());
   }
 
   static buildLinkCollection({
     data,
     deleteMutation,
+    saveMutation,
   }: LinkBuildProps): Collection<Link, LinkProps> {
     return new Collection<Link, LinkProps>(data, (json: LinkProps) =>
-      Link.buildLink(json, deleteMutation)
+      Link.buildLink(json, deleteMutation, saveMutation),
     );
   }
 

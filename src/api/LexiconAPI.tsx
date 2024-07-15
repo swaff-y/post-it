@@ -6,10 +6,8 @@ const CLIENT = axios.create({
   baseURL: API_URL,
 });
 
-export type LinkParams = {
-  url: string;
-  description: string;
-  keywords: string;
+export type Params = {
+  [key: string]: string;
 };
 
 export class LexiconAPI {
@@ -29,7 +27,7 @@ export class LexiconAPI {
     return response.data;
   };
 
-  createLink = async (link: LinkParams) => {
+  createLink = async (link: Params) => {
     const response = await this.client.post('/api/links', link);
     if (!response.data) throw new Error('Failed to create link');
 
