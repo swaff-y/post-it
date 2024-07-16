@@ -27,8 +27,15 @@ export class LexiconAPI {
     return response.data;
   };
 
-  createLink = async (link: Params) => {
-    const response = await this.client.post('/api/links', link);
+  createLink = async (params: Params) => {
+    const response = await this.client.post('/api/links', params);
+    if (!response.data) throw new Error('Failed to create link');
+
+    return response.data;
+  };
+
+  updateLink = async ({id, params} : {id:string; params: Params}) => {
+    const response = await this.client.post(`/api/links/${id}`, params);
     if (!response.data) throw new Error('Failed to create link');
 
     return response.data;
