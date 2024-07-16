@@ -15,7 +15,7 @@ export interface LinkProps {
 type LinkBuildProps = {
   data: any;
   deleteMutation: UseMutationResult<any, Error, string, unknown>;
-  saveMutation: UseMutationResult<any, Error, Params, unknown>;
+  createMutation: UseMutationResult<any, Error, Params, unknown>;
 };
 
 export class Link extends Model<LinkProps> {
@@ -28,18 +28,18 @@ export class Link extends Model<LinkProps> {
   static buildLink(
     attrs: LinkProps,
     deleteMutation: UseMutationResult<any, Error, string, unknown>,
-    saveMutation: UseMutationResult<any, Error, Params, unknown>,
+    createMutation: UseMutationResult<any, Error, Params, unknown>,
   ): Link {
-    return new Link(saveMutation, deleteMutation, new Attributes<LinkProps>(attrs), new Eventing());
+    return new Link(createMutation, deleteMutation, new Attributes<LinkProps>(attrs), new Eventing());
   }
 
   static buildLinkCollection({
     data,
     deleteMutation,
-    saveMutation,
+    createMutation,
   }: LinkBuildProps): Collection<Link, LinkProps> {
     return new Collection<Link, LinkProps>(data, (json: LinkProps) =>
-      Link.buildLink(json, deleteMutation, saveMutation),
+      Link.buildLink(json, deleteMutation, createMutation),
     );
   }
 
