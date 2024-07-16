@@ -6,11 +6,17 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 
+export type UpdateParams = {
+  id: string;
+  params: Params;
+};
+
 export const useMutateHooks = (): [
   UseMutationResult<any, Error, string, unknown>,
-  UseMutationResult<any, Error, Params, unknown>
+  UseMutationResult<any, Error, Params, unknown>,
+  UseMutationResult<any, Error, UpdateParams, unknown>
 ] => {
-  const { deleteLink, createLink } = useLexicon();
+  const { deleteLink, createLink, updateLink } = useLexicon();
   const queryClient = useQueryClient();
   const queryKey = ['links'];
 
@@ -28,5 +34,12 @@ export const useMutateHooks = (): [
     },
   });
 
-  return [deleteMutation, createMutation];
+  const updateMutation = useMutation({
+    mutationFn: updateLink,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey });
+    },
+  });
+
+  return [deleteMutation, createMutation, updateMutation];
 };

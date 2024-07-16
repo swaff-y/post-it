@@ -3,7 +3,7 @@ import { NAV_LINKS } from "@/components/HomeContainer/HomeContainer";
 import "./page.css";
 import { SectionContainer } from "@/components/SectionContainer/SectionContainer";
 import { NavTabs } from "@/components/NavTabs/NavTabs";
-import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import { Button, Form, InputGroup, Spinner, Toast, ToastContainer } from "react-bootstrap";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useNewLink } from "@/hooks/useNewLink";
@@ -26,6 +26,9 @@ const CreateNote = () => {
   const [isError, setIsError] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
+  const toastInfo = useInfoToasts() as any;
+  const [infoToast, setInfoToast] = toastInfo
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
 
@@ -38,7 +41,7 @@ const CreateNote = () => {
     if (urlIsValid && descriptionIsValid && keywordsIsValid) {
       const link = newLink(params);
       setIsPending(true);
-      link.save({
+      link.create({
         onSuccess: () => {
           setIsPending(false)
           router.push('/home')
@@ -68,6 +71,16 @@ const CreateNote = () => {
       setShowUrlTooltip(false);
     }
   };
+
+  useEffect(() => {
+    if (infoToast.message) {
+      const timer = setTimeout(() => {
+        setInfoToast({ message: '', type: '' })
+      }, 5000)
+
+      return () => clearTimeout(timer);
+    }
+  }, [infoToast])
 
   useEffect(() => {
     // Regex pattern for URL validation
@@ -115,7 +128,7 @@ const CreateNote = () => {
                   onChange={handleUrlChange}
                   isValid={urlIsValid}
                   isInvalid={!urlIsValid}
-                  />
+                />
                 { showUrlTooltip &&
                   <Form.Control.Feedback type="invalid" tooltip>
                         Please enter a valid URL
@@ -168,9 +181,31 @@ const CreateNote = () => {
                 </Button>              
               }
             </div>
-            { isError && <p className="error-message">An error occurred. Please try again.</p> }
+            { isError && 
+              <p 
+                className="error-message"
+              >
+                An error occurred. Please try again.
+              </p>
+            }
           </Form>
         </SectionContainer>
+        <ToastContainer
+          className="toast-container"
+        >
+          <Toast 
+            bg={infoToast.type}
+            show={!!infoToast.message}
+          >
+            <Toast.Header 
+              closeVariant='white'
+              closeButton={false}
+            >
+              <strong className="me-auto">{infoToast.type}</strong>
+            </Toast.Header>
+            <Toast.Body>{infoToast.message}</Toast.Body>
+          </Toast>
+        </ToastContainer>
       </div>
     </>
   );
