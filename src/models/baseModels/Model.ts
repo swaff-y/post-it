@@ -20,11 +20,11 @@ type Params = {
   [key: string]: string;
 };
 
-export interface HasLinkKey {
+export interface HasId {
   id?: string;
 }
 
-export class Model<T extends HasLinkKey> {
+export class Model<T extends HasId> {
   constructor(
     private saveMutation: UseMutationResult<any, Error, Params, unknown>,
     private deleteMutation: UseMutationResult<any, Error, string, unknown>,
