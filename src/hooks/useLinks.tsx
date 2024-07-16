@@ -6,7 +6,7 @@ import { useMutateHooks } from './useMutateHooks';
 
 export const useLinks = (): UseQueryResponse => {
   const { fetchLinks } = useLexicon();
-  const [deleteMutation, createMutation] = useMutateHooks();
+  const [deleteMutation, createMutation, updateMutation] = useMutateHooks();
   
   const result = useQuery({
     queryKey: ['links'],
@@ -18,7 +18,8 @@ export const useLinks = (): UseQueryResponse => {
   const links = Link.buildLinkCollection({ 
     data: linksArr,
     deleteMutation,
-    createMutation
+    createMutation,
+    updateMutation
   });
 
   return {
